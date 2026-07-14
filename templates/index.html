@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Network Monitoring System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <h1>Smart Network Monitoring System</h1>
+    <p>Live device status dashboard (auto-refreshing every 10 seconds)</p>
+
+    <div class="add-device-form">
+        <input type="text" id="device-name" placeholder="Device name (e.g. Laptop)">
+        <input type="text" id="device-ip" placeholder="IP address (e.g. 192.168.1.5)">
+        <button onclick="addDevice()">Add Device</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>IP Address</th>
+                <th>Status</th>
+                <th>Last Checked</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="device-table-body">
+            {% for device in devices %}
+            <tr>
+                <td>{{ device.id }}</td>
+                <td>{{ device.name }}</td>
+                <td>{{ device.ip_address }}</td>
+                <td><span class="{{ device.status }}">{{ device.status }}</span></td>
+                <td>{{ device.last_checked }}</td>
+                <td><button class="delete-btn" onclick="deleteDevice({{ device.id }})">Delete</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        async function refreshDevices() {
+            await fetch('/api/devices/check', { method: 'POST' });
+            const response = await fetch('/api/devices');
+            const devices = await response.json();
+
+            const tableBody = document.getElementById('device-table-body');
+            tableBody.innerHTML = '';
+
+            devices.forEach(device => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${device.id}</td>
+                    <td>${device.name}</td>
+                    <td>${device.ip_address}</td>
+                    <td><span class="${device.status}">${device.status}</span></td>
+                    <td>${device.last_checked}</td>
+                    <td><button class="delete-btn" onclick="deleteDevice(${device.id})">Delete</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        async function addDevice() {
+            const nameInput = document.getElementById('device-name');
+            const ipInput = document.getElementById('device-ip');
+
+            const name = nameInput.value.trim();
+            const ip = ipInput.value.trim();
+
+            if (!name || !ip) {
+                alert('Please enter both a device name and IP address.');
+                return;
+            }
+
+            await fetch('/api/devices/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, ip_address: ip })
+            });
+
+            nameInput.value = '';
+            ipInput.value = '';
+            refreshDevices();
+        }
+
+        async function deleteDevice(deviceId) {
+            const confirmed = confirm('Are you sure you want to delete this device?');
+            if (!confirmed) return;
+
+            await fetch(`/api/devices/delete/${deviceId}`, { method: 'DELETE' });
+            refreshDevices();
+        }
+
+        setInterval(refreshDevices, 10000);
+    </script>
+
+</body>
+</html>

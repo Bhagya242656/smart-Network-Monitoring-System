@@ -1,0 +1,150 @@
+./* ===== Delete Button ===== */
+.delete-btn {
+    padding: 6px 14px;
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #fecaca;
+}
+/* ===== Base Reset & Typography ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    background-color: #f0f2f5;
+    color: #1a1a2e;
+    padding: 40px;
+}
+
+/* ===== Header Section ===== */
+h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 6px;
+}
+
+body > p {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+/* ===== Add Device Form ===== */
+.add-device-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+    background: white;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.add-device-form input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.add-device-form input:focus {
+    border-color: #3b82f6;
+}
+
+.add-device-form button {
+    padding: 10px 24px;
+    background-color: #0f172a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add-device-form button:hover {
+    background-color: #1e293b;
+}
+
+/* ===== Table ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+thead {
+    background-color: #0f172a;
+}
+
+th {
+    padding: 14px 18px;
+    text-align: left;
+    color: white;
+    font-size: 13px;
+    font-weight:700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+td {
+    padding: 14px 18px;
+    font-size: 14px;
+    font-weight:500;
+    color:#1e293b;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ===== Status Badges ===== */
+.online, .offline, .unknown {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.online {
+    background-color: #dcfce7;
+    color: #16a34a;
+}
+
+.offline {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.unknown {
+    background-color: #f1f5f9;
+    color: #64748b;
+}
